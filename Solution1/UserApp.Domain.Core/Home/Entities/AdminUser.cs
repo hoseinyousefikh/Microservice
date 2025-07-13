@@ -8,8 +8,11 @@ using System.Threading.Tasks;
 namespace UserApp.Domain.Core.Home.Entities
 {
     [Table("admin_users", Schema = "identity")]
-    public class AdminUser : UserBase
+    public class AdminUser
     {
+        [Column("id")]
+        public int Id { get; set; }
+
         [Column("admin_level")]
         public int AdminLevel { get; set; } = 1;
 
@@ -18,5 +21,11 @@ namespace UserApp.Domain.Core.Home.Entities
 
         [Column("can_manage_products")]
         public bool CanManageProducts { get; set; } = true;
+
+        [Column("user_id")] // اضافه شود
+        public int UserId { get; set; }
+
+        [ForeignKey("UserId")] // تغییر به این
+        public virtual ApplicationUser User { get; set; }
     }
 }

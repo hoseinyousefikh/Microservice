@@ -8,8 +8,11 @@ using System.Threading.Tasks;
 namespace UserApp.Domain.Core.Home.Entities
 {
     [Table("employee_users", Schema = "identity")]
-    public class EmployeeUser : UserBase
+    public class EmployeeUser
     {
+        [Column("id")]
+        public int Id { get; set; }
+
         [Column("department")]
         public string Department { get; set; } = string.Empty;
 
@@ -18,5 +21,11 @@ namespace UserApp.Domain.Core.Home.Entities
 
         [Column("hire_date")]
         public DateTime HireDate { get; set; } = DateTime.UtcNow;
+
+        [Column("salary")]
+        public decimal Salary { get; set; }
+
+        [ForeignKey("Id")]
+        public required virtual ApplicationUser User { get; set; }
     }
 }

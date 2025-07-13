@@ -8,8 +8,8 @@ namespace UserApp.Domain.Core.Home.Enum
 {
     public enum SubscriptionPlan
     {
-        Basic = 1,
-        Premium = 2,
-        Enterprise = 3
+        Basic = 1,    // 1 month free
+        Premium = 2,  // 3 months
+        Enterprise = 3 // 1 year
     }
 }

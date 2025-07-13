@@ -8,8 +8,11 @@ using System.Threading.Tasks;
 namespace UserApp.Domain.Core.Home.Entities
 {
     [Table("buyer_users", Schema = "identity")]
-    public class BuyerUser : UserBase
+    public class BuyerUser
     {
+        [Column("id")]
+        public int Id { get; set; }
+
         [Column("address")]
         public string? Address { get; set; }
 
@@ -21,5 +24,11 @@ namespace UserApp.Domain.Core.Home.Entities
 
         [Column("loyalty_points")]
         public int LoyaltyPoints { get; set; } = 0;
+
+        [Column("last_purchase_date")]
+        public DateTime? LastPurchaseDate { get; set; }
+
+        [ForeignKey("Id")]
+        public required virtual ApplicationUser User { get; set; }
     }
 }

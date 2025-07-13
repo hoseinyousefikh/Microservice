@@ -9,8 +9,11 @@ using UserApp.Domain.Core.Home.Enum;
 namespace UserApp.Domain.Core.Home.Entities
 {
     [Table("seller_users", Schema = "identity")]
-    public class SellerUser : UserBase
+    public class SellerUser
     {
+        [Column("id")]
+        public int Id { get; set; }
+
         [Column("subscription_plan")]
         public SubscriptionPlan SubscriptionPlan { get; set; } = SubscriptionPlan.Basic;
 
@@ -29,8 +32,13 @@ namespace UserApp.Domain.Core.Home.Entities
         [Column("commission_rate")]
         public decimal CommissionRate { get; set; } = 0.1m;
 
-        public bool IsSubscriptionActive => SubscriptionExpiry > DateTime.UtcNow;
-        public TimeSpan? CurrentSessionDuration => CurrentSessionStart.HasValue ?
-            DateTime.UtcNow - CurrentSessionStart.Value : null;
+        [Column("payment_due_date")]
+        public DateTime PaymentDueDate { get; set; } = DateTime.UtcNow.AddMonths(1);
+
+        [Column("is_subscription_active")]
+        public bool IsSubscriptionActive { get; set; } = true;
+
+        [ForeignKey("Id")]
+        public required virtual ApplicationUser User { get; set; }
     }
 }

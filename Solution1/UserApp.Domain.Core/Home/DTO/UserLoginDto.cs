@@ -15,6 +15,7 @@ namespace UserApp.Domain.Core.Home.DTO
         public string Email { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Password is required")]
+        [DataType(DataType.Password)]
         public string Password { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "User type is required")]

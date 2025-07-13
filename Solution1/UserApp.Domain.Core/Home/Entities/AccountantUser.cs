@@ -8,8 +8,11 @@ using System.Threading.Tasks;
 namespace UserApp.Domain.Core.Home.Entities
 {
     [Table("accountant_users", Schema = "identity")]
-    public class AccountantUser : UserBase
+    public class AccountantUser
     {
+        [Column("id")]
+        public int Id { get; set; }
+
         [Column("can_view_financial_reports")]
         public bool CanViewFinancialReports { get; set; } = true;
 
@@ -18,5 +21,11 @@ namespace UserApp.Domain.Core.Home.Entities
 
         [Column("can_generate_invoices")]
         public bool CanGenerateInvoices { get; set; } = true;
+
+        [Column("can_audit_records")]
+        public bool CanAuditRecords { get; set; } = true;
+
+        [ForeignKey("Id")]
+        public required virtual ApplicationUser User { get; set; }
     }
 }

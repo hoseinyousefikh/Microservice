@@ -18,5 +18,8 @@ namespace UserApp.Domain.Core.Home.DTO
         public UserType UserType { get; set; }
         public ActivityStatus ActivityStatus { get; set; }
         public TimeSpan? RemainingSessionTime { get; set; }
+        public DateTime? SubscriptionExpiry { get; set; }
+        public bool IsSubscriptionActive { get; set; }
+        public string? ProfileImageUrl { get; set; }
     }
 }
