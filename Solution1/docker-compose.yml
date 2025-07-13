@@ -1,0 +1,67 @@
+version: '3.8'
+
+services:
+  # 1. API Gateway (.NET)
+  apigateway:
+    build:
+      context: ./src/API-Gateway
+      dockerfile: Dockerfile
+    ports:
+      - "5000:80"
+    depends_on:
+      - userservice
+      - productservice
+      - notificationservice
+
+  # 2. User Service (.NET)
+  userservice:
+    build:
+      context: ./src/UserService
+      dockerfile: Dockerfile
+    ports:
+      - "5001:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=UserDB;User Id=sa;Password=YourStrong@Password;
+
+  # 3. Product Service (Python)
+  productservice:
+    image: python:3.11
+    volumes:
+      - ./src/ProductService/app:/app
+    working_dir: /app
+    command: uvicorn main:app --host 0.0.0.0 --port 8000
+    ports:
+      - "8000:8000"
+    depends_on:
+      - sqlserver
+    environment:
+      - DB_SERVER=sqlserver
+      - DB_NAME=ProductDB
+      - DB_USER=sa
+      - DB_PASSWORD=YourStrong@Password
+
+  # 4. Notification Service (Python)
+  notificationservice:
+    image: python:3.11
+    volumes:
+      - ./src/NotificationService/app:/app
+    working_dir: /app
+    command: uvicorn main:app --host 0.0.0.0 --port 8001
+    ports:
+      - "8001:8001"
+
+  # 5. SQL Server Database
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      SA_PASSWORD: "YourStrong@Password"
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: "Developer"
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlvolume:/var/opt/mssql
+
+volumes:
+  sqlvolume:
