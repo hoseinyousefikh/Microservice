@@ -10,9 +10,6 @@
     <Folder Include="Home\Contract\AppServices\" />
     <Folder Include="Home\Contract\Services\" />
     <Folder Include="Home\Contract\Repositories\" />
-    <Folder Include="Home\DTO\" />
-    <Folder Include="Home\Entities\" />
-    <Folder Include="Home\Enum\" />
   </ItemGroup>
 
 </Project>
